@@ -1,0 +1,15 @@
+[Unit]
+Description=CRAFT Minecraft Server
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/root/craft-server
+ExecStart=/root/craft-server/craft.sh up
+ExecStop=/root/craft-server/craft.sh down
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

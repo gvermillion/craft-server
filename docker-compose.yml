@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  minecraft:
+    build: .
+    container_name: craft-server
+    ports:
+      - "25565:25565"
+      - "25575:25575"
+      - "19132:19132/udp"
+    volumes:
+      - craft_data:/data
+    env_file:
+      - /app/.env
+    environment:
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      ENABLE_RCON: "true"
+      RCON_PORT: "25575"
+    healthcheck:
+      test: ["CMD", "/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: always
+
+volumes:
+  craft_data:
